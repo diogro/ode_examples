@@ -17,9 +17,11 @@ Lorenz<-function(t, state, parameters) {
 times <- seq(0, 100, by = 0.01)
 
 library(deSolve)
+library(ggplot2)
 out <- ode(y = state, times = times, func = Lorenz, parms = parameters)
 
-par(oma = c(0, 0, 3, 0))
-plot(out, xlab = "time", ylab = "-")
-plot(out[, "X"], out[, "Z"], pch = ".")
-mtext(outer = TRUE, side = 3, "Lorenz model", cex = 1.5)
+out_df = as.data.frame(out)
+ggplot(data = out_df, aes(x = time, X)) + geom_line()
+ggplot(data = out_df, aes(x = time, Y)) + geom_line()
+ggplot(data = out_df, aes(x = time, Z)) + geom_line()
+ggplot(data = out_df, aes(x = X, Z)) + geom_point()
