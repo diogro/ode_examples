@@ -22,4 +22,4 @@ out <- ode(y = state, times = t, func = lotkaVoltera, parms = parameters)
 out_df = as.data.frame(out)
 
 ggplot(data = out_df, aes(x = time, y = V, color= 'Prey')) + geom_point() + geom_point(data = out_df, aes(x = time, y = P, color = 'Predator'))
-ggplot(data = out_df, aes(x = P, y = V)) + geom_point() + geom_point(data = out_df[1,], aes(x = P, y= V, color = 'Initial'))
+ggplot(data = out_df[1:567,], aes(x = P, V, color = time)) + geom_point()
