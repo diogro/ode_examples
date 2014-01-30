@@ -1,6 +1,6 @@
 t <- seq(0, 10, by = 0.01)
 # parameters
-parameters <- c(r = 2, K = 10)
+parameters <- c(r = 1.5, K = 10)
 
 # initial condition
 state <- c(x = 0.1)
@@ -17,6 +17,7 @@ logistic <- function(t, state, parameters){
 }
 
 library(deSolve)
+library(ggplot2)
 out <- ode(y = state, times = t, func = logistic, parms = parameters)
 
-plot(out)
+ggplot(data = as.data.frame(out), aes(t, x)) + geom_point()
