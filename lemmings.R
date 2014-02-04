@@ -16,13 +16,13 @@ yinit <- c(y = K + 0.001)
 times <- seq(-0.74, 40, by = 0.01)
 
 ## function to be derived
-## contains a call for thd special function 'lagvalue' from ode library
-## that returns the values of the state variable (population size)
-## in the time= time - lag
+## contains a call for the special function 'lagvalue', from the deSolve
+##  ode library, that returns the values of the state variable (population size)
+## in the time = time - lag
 derivs <- function(t, y, parms) {
     ## This part returns the state variable at the time-lag if t>0
-        ## For time<0 it returns the carrying capacity
-        ## Meaning that the population was at k before t=0
+    ## For time<0 it returns the carrying capacity
+    ## Meaning that the population was at k before t=0
     if (t < 0)
         y.lag <- k
     else
