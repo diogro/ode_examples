@@ -20,6 +20,7 @@ lotkaVolterra <- function(t, state, parameters){
 
 out <- ode(y = state, times = t, func = lotkaVolterra, parms = parameters)
 out_df = as.data.frame(out)
+out_m = melt(out_df, id.vars='time')
 
-ggplot(data = out_df, aes(x = time, y = V, color= 'Prey')) + geom_point() + geom_point(data = out_df, aes(x = time, y = P, color = 'Predator'))
+ggplot(out_m, aes(time, value, color = variable)) + geom_point()
 ggplot(data = out_df[1:567,], aes(x = P, V, color = time)) + geom_point()
