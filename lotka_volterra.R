@@ -1,5 +1,6 @@
 library(deSolve)
 library(ggplot2)
+library(reshape2)
 
 #time
 t <- seq(0, 50, by = 0.01)
