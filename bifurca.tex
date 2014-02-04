@@ -1,0 +1,246 @@
+\documentclass{beamer}
+%\documentclass[handout]{beamer}
+%\documentclass{article}
+%\usepackage{beamerarticle}
+
+\mode<presentation>
+{
+    %\usetheme{Warsaw}
+    %\usetheme{Frankfurt}
+    \usetheme[subsection=false]{Dresden}
+    %\usecolortheme{dove}
+    \usecolortheme{beaver}
+    \useinnertheme{circles}
+
+    \setbeamercovered{dynamic}
+    % If you wish to uncover everything in a step-wise fashion, uncomment
+    % the following command: 
+    %\beamerdefaultoverlayspecification{<+->}
+    %\pgfdeclareimage[height=0.6cm]{university-logo}{IFT.jpg}
+    %\logo{\pgfuseimage{university-logo}}
+}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+
+
+\title[Bifurcation diagrams]{Tutorial on Qualitative analysis and Bifurcation diagrams}
+
+\author[Renato Coutinho]{Renato Mendes Coutinho (IFT - Unesp)}
+
+\date[SSSMB 2014] % (optional, should be abbreviation of conference name)
+{
+    {\footnotesize \texttt{renatomc@ift.unesp.br}}\\
+\vspace{0.5cm}S\~ao Paulo\\February, 2014}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{}
+    \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{I have a model! What now?}
+    \pause
+    \begin{block}{Principle I}
+        I have equations, so I want solutions!
+    \end{block}
+    \pause
+    \vfill
+    We will use as example a nice and simple model that we all should care
+    about: the next step in predator--prey (or consumer--resource) models: the
+    \textbf{Rosenzweig--MacArthur} model.
+\end{frame}
+
+\begin{frame}{The Rosenzweig--MacArthur model}
+    \begin{itemize}
+        \item Includes the same ingredients as the Lotka-Volterra equations,
+        \item plus a carrying capacity for the resource,
+        \item and plus a saturation in the predation rate.
+    \end{itemize}
+    \pause
+    \begin{align*}
+        \frac{dR}{dt} &= rR \left( 1 - \frac{R}{K} \right) - \frac{a R C}{1+ahR} \\
+        \frac{dC}{dt} &= \frac{e a R C}{1+ahR} - d C
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Rosenzweig--MacArthur model solutions}
+    \begin{itemize}
+        \item By Principle I, we want the solution of the model.
+        \item We resort to numerical integration, but then\ldots which
+            parameters should I use? And which initial conditions?
+        \item For now, let's just guess some parameters, and pick a few
+            different initial conditions.
+        \item
+            \includegraphics[height=1.5ex]{ipynblogo.png}
+            \pause
+        \item It seems that initial conditions don't matter for the final
+            long-term solution: a fixed point.
+    \end{itemize}
+\end{frame}
+
+\section{``Visual'' qualitative analysis}
+
+\begin{frame}{The phase space flow and the fixed point}
+    \begin{itemize}
+        \item The differential equations define a flow in the phase space: at
+            each point, there's a direction the solution must follow when it
+            goes through that point.
+        \item
+            \includegraphics[height=1.5ex]{ipynblogo.png}
+            \pause
+        \item The size (the magnitude) of the arrows become small near
+            the fixed point.
+        \item That is, at the fixed point, $\frac{dC}{dt} = 0$ and
+            $\frac{dR}{dt} = 0$.
+        \item The flow spirals towards the center, so any initial condition
+            approaches the center.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Messing a little with the parameters\ldots}
+    \begin{itemize}
+        \item We have seen that predator-prey systems tend to oscillate, but in this
+            case, the long-term solution is stationary.
+        \item Let's, for example, increase the carrying capacity $K$ a little.
+        \item
+            \includegraphics[height=1.5ex]{ipynblogo.png}
+            \pause
+        \item Now the arrows inside spirals outward, and the flow outside
+            spirals inward, towards a \textbf{limit cycle}.
+        \item The fixed point is still there (the arrows' sizes go to zero
+            in the center), but now the solution moves away from it.
+        \item We say that the fixed point became \textbf{unstable}.
+        \item A change in the stability of a fixed point is a
+            \textbf{bifurcation}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Varying a parameter systematically: the bifurcation diagram}
+    \begin{itemize}
+        \item Changing the values of parameters haphazardly, it may be hard to
+            see and to synthesize what happens in the system.
+        \item Let's imagine you change the value of a parameter by a very
+            small value:
+        \pause
+        \item the expectation is that the solution changes only a tiny bit.
+        \item But if we sweep a range of values in small steps, we will see a
+            parameter value where the solution attains a new behavior: the bifurcation
+            point.
+        \item Let's do this increasing the resource carrying capacity $K$:
+            what do you expect it is going to happen?
+        \item
+            \visible<2>{\includegraphics[height=1.5ex]{ipynblogo.png}}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The paradox of enrichment}
+    \begin{itemize}
+        \item For very small $K$, the predator is extinct,
+        \item for intermediate $K$, the solution goes to a fixed point (the
+            minimum and maximum of the solution have the same value!)
+        \item and for high $K$, there are oscillations with amplitudes that
+            increase with $K$.
+            \pause
+        \item The ``paradox of enrichment'' means that boosting
+            the resource population can lead to extinction either of the
+            resource or of the consumer (or both), because the solution passes
+            closer and closer to zero.
+    \end{itemize}
+\end{frame}
+
+\section{Systems that depend explicitly on time}
+
+\begin{frame}{Seasonal consumer resource dynamics}
+    \begin{itemize}
+        \item In certain situations, we may want to include explicit temporal
+            dependence into our models.
+        \item Seasonality, environmental fluctuations and experimental
+            manipulation are some clear reasons why you would need that.
+        \item Let's see what happens when we take our Rosenzweig-MacArthur
+            model and introduce a seasonal growth rate $r = r_0 (1+\alpha
+            \sin(2\pi t/T))$ 
+        \item We are going to make a small perturbation ($\alpha$ small), so
+            we shouldn't see much happening.
+        \item
+            \includegraphics[height=1.5ex]{ipynblogo.png}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{A resonance diagram}
+    \begin{itemize}
+        \item The population oscillates together with the seasonal variation,
+            even though the system with $K=10$ didn't oscillate -- but the
+            amplitude is small.
+        \item We now do a kind of bifurcation diagram, but now what we vary is
+            the \textbf{frequency of the external oscillations}.
+        \item
+            \includegraphics[height=1.5ex]{ipynblogo.png}
+            \pause
+        \item There's a sharp peak in the amplitude around a certain
+            frequency. This is called a \textbf{resonance}.
+        \item If we go back to the first plot (with $K=10$ without seasonal
+            fluctuations), we find that the period of the oscillations in the
+            transient is around 23.
+        \item No, not a coincidence\ldots
+    \end{itemize}
+\end{frame}
+
+\section{A few comments}
+
+\begin{frame}{What if there are more than 2 equations?}
+    \begin{itemize}
+        \item In that case, the phase space has more than 2 dimensions and
+            doesn't fit into a nice 2-d plot.
+        \item You can still try to plot planes of the phase space, specially
+            ones containing the fixed points of interest.
+        \item Bifurcation diagrams are still very much useful: you don't have
+            to plot all the curves to characterize the solution.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What if I want to explore a 10-dimensional parameter
+    space?}
+    \begin{itemize}
+        \item Avoid that: you can reduce the number of parameters
+            rescaling your variables (adimensionalizing)
+        \item You can also restrict the values considered based on data and on
+            careful judgement: not every parameter has the same relevance to
+            the outcomes.
+    \end{itemize}
+    \pause
+
+    But I still have 10 parameters left!
+
+    \begin{itemize}
+        \item Well, Good luck!
+        \item You will probably have to sample the space, rather than
+            go through the whole thing. A recommended method is to use
+            so-called
+            \href{http://en.wikipedia.org/wiki/Latin_hypercube_sampling}{Latin Hypercube
+            samples},
+            that uses a random sampling while ensuring a roughly
+            regularly-spaced distribution.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{}
+    Thanks for your attention!
+
+    \vspace{4ex}
+    All the code for the solutions and plots shown are available at 
+    \href{http://ecologia.ib.usp.br/ssmb/doku.php?id=2014:courses:kraenkel:start}{the
+    wiki of the course}
+\end{frame}
+
+\end{document}
