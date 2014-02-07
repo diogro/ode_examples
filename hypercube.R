@@ -121,7 +121,6 @@ points(a~b, data=hypercube, subset=!(hypercube$X>1e-6&hypercube$Y>1e-6), col="re
 ## Further exploration can reveal more!
 
 
-
 ### A more complicated example: Disease spread in a Suscetible-Infected-Recovered epidemic model ###
 
 ## 1. Create a function that receive model parameters and time sequence
