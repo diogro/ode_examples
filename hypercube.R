@@ -10,14 +10,14 @@ library(pse) # for latin hypercube
 
 ### First example: two competitors in a Lotka-Volterra System ###
 
-## 1. Create a function that receive model parameters and time sequence
+## 1. Create a function that gets the model parameters and time sequence
 ## and outputs the final size of populations
-## Argument runsteady=TRUE use the runsteady function of package rootSolve
+## If argument runsteady=TRUE the function uses the runsteady function of package rootSolve
 ## to run numerical integration till a stationary point (hopefully, please see help of the function)
+## if FALSE the function uses the ode function to do the integration
 oneRun <- function(X0, Y0, a, b,  times, runsteady=TRUE){
-    ## parameters: initial sizes and competition coeficients
+    ## parameters: initial sizes and competition coefficients
     parameters <- c(a = a, b = b)
-    ## initial population sizes: start with a single infected individual to test invasibility
     state <- c(X = X0, Y = Y0)
     ## The function to be integrated
     LV <- function(t, state, parameters){
@@ -42,7 +42,8 @@ oneRun <- function(X0, Y0, a, b,  times, runsteady=TRUE){
 ## 2. Create a function with mapply that gets a matrix of parameter combinations
 ## (combinations are lines and parameters are columns)
 ## and returns the output of the function above for each parameter combination.
-## Use argument 'MoreArgs' to input the values for additional arguments (runsteady and times)
+## Use argument 'MoreArgs' to input the values for additional arguments that are not in the matrix of parameter
+## (arguments runsteady and times)
 modelRun <- function (my.pars) {
     return(mapply(oneRun, my.pars[,1], my.pars[,2], my.pars[,3], my.pars[,4],
                   MoreArgs=list(times=c(0,Inf), runsteady=TRUE)))
@@ -62,8 +63,8 @@ q <- c("qunif", "qunif", "qunif", "qunif")
 ## with the max and min of the corresponding model parameter, in the same order as above
 q.arg <- list(list(min=0, max=1), list(min=0, max=1), list(min=0, max=2), list(min=0, max=2))
 
-## 4. Now create the hypercube and run the model for each combination of parameters
-## with LHS, the working horse function of pse package.
+## 4. Now create the hypercube and run the model for each combination of parameters with LHS,
+## the working horse function of pse package.
 ## N=200 combinations of parameters, please see help for further information
 myLHS <- LHS(model=modelRun, factors=factors, N=200, q=q, q.arg=q.arg, nboot=100) # use nboot=0 if do not need partial correlations
 
@@ -79,7 +80,7 @@ plotscatter(myLHS, add.lm=FALSE)
 ## Partial rank correlations (run LHS with nboot to get confidence intervals)
 ## Which are the non-parametric correlation of each parameter with each output,
 ## with the effects of the other variables partialed out
-## Confidence bars crossing the zero horizontal line indicate no-significant LINEAR partial correlation
+## Confidence bars crossing the zero horizontal line indicate no-significant partial correlation
 plotprcc(myLHS)
 ## Final population sizes have a strong correlation with competition coefficients
 
@@ -96,7 +97,7 @@ names(hypercube)[5:6] <- c("X", "Y") # cosmetic
 ## In some case you can also use linear models such as multiple regressions to identify patterns.
 
 ## We already know that there is coexistence in this parameter space.
-## bu in how many runs?
+## but in how many runs?
 sum(hypercube$X>1e-6&hypercube$Y>1e-6)
 
 ## Which parameter combinations ensue coexistence?
@@ -110,7 +111,7 @@ boxplot(Y0~coexistence, data=hypercube, xlab="Coexistence")
 boxplot(a~coexistence, data=hypercube, xlab="Coexistence")
 boxplot(b~coexistence, data=hypercube, xlab="Coexistence")
 par(mfrow=c(1,1))
-## There is a upper bound of coefficients to heva coexistence
+## There is an upper bound of coefficients to have coexistence
 
 ## Which combination of coefficients ensue coexistence?
 ## A bivariate scatterplot
@@ -118,7 +119,7 @@ plot(a~b, data=hypercube, type="n") ## to scale the plot for the whole parameter
 points(a~b, data=hypercube, subset=hypercube$X>1e-6&hypercube$Y>1e-6, col="blue")
 points(a~b, data=hypercube, subset=!(hypercube$X>1e-6&hypercube$Y>1e-6), col="red")
 ## Coexistence possible only if both  coeficients < 1, roughly
-## Further exploration can reveal more!
+## Further exploration can  reveal more!
 
 
 ### A more complicated example: Disease spread in a Suscetible-Infected-Recovered epidemic model ###
@@ -148,7 +149,7 @@ oneRun.sir <- function(S0, I0, R0, r, a, time=seq(0, 50, by = 0.01)){
 ## (combinations are lines and parameters are columns)
 ## and returns the output of the integration for each parameter combination.
 ## To do this, use mapply
-## As we are interested in disease spread we set I0 to a small value and R0 to zero
+## As we are interested in disease spread we restrict I0 to one and R0 to zero
 modelRun.sir <- function (my.pars) {
     return(mapply(oneRun.sir, my.pars[,1], 1, 0, my.pars[,2], my.pars[,3]))
 }
@@ -192,7 +193,8 @@ plot(a~r, data=hypercube, type="n") # to show all ranges of the parameters
 points(a~r, data=hypercube, subset=S0<median(S0)&Spread==1, col="red")
 points(a~r, data=hypercube, subset=S0<median(S0)&Spread==0, col="blue")
 
-## And you can also explore rate among two parameters and an additional  parameters
+## And you can also explore relationships between ratios of two parameters
+## in function of additional  parameters
 plot(I(a/r)~S0, data=hypercube, type="n") # to show all ranges of the parameters
 points(I(a/r)~S0, subset=Spread==1, data=hypercube, col="red")
 points(I(a/r)~S0, subset=Spread==0, data=hypercube, col="blue")
