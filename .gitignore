@@ -7,3 +7,6 @@
 # Example code in package build process
 *-Ex.R
 .ipynb_checkpoints/*
+
+# emacs temp files
+*~
