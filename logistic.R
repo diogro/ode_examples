@@ -1,3 +1,4 @@
+## Time sequence
 t <- seq(0, 10, by = 0.01)
 # parameters
 parameters <- c(r = 1.5, K = 10)
@@ -16,8 +17,17 @@ logistic <- function(t, state, parameters){
   })
 }
 
+## Necessary R packages
 library(deSolve)
 library(ggplot2)
+
+## Run the numerical integration
 out <- ode(y = state, times = t, func = logistic, parms = parameters)
 
+## Plots
+## Standard plot library
+plot(out, lwd=5, col="lightblue")
+curve(0.1*10*exp(1.5*x)/(10+0.1*(exp(1.5*x)-1)), add=TRUE, lty=2, lwd=1.5)
+legend("topleft", c("Numerical", "Analytical"), lty=c(1,2), col=c("lightblue", "black"), cex=1.5)
+## ggplot2 library
 ggplot(data = as.data.frame(out), aes(t, x)) + geom_point()
