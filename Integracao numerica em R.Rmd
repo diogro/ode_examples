@@ -111,6 +111,7 @@ state <- c(x = 0.1)
 ```
 
 #### 2. Escolha um intervalo de tempo ou uma sequência de tempos em que deseja a solução calculada
+
 Note que estes são momentos no tempo para os quais você quer a solução. **Não são os intervalos de integração**, que são definidos internamente pela função de integração.
 
 ```{r}
