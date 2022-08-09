@@ -102,8 +102,10 @@ E vamos usar o caso em que  $r=2$, $K=10$ e a condição inicial $x(0) = 0.1$. M
 
 #### 1. Defina os valores dos parâmetros e condição inicial
 
-```{r}
-# paramentros: devem estar em um vetor
+Crie os seguintes vetores:
+
+```{r parametros}
+# parametros: devem estar em um vetor
 parameters <- c(r = 1.5, K = 10)
 
 # condições iniciais: também devem estar em um vetor, mesmo que seja um só valor
@@ -124,8 +126,10 @@ time <- seq(from=0, to=10, by = 0.01)
 Vamos definir uma função em R para o lado direito da equação diferencial.
 Para esta função ser reconhecida pelas rotinas de integração da biblioteca que vamos usar (*deSolve*), esta função em R deve calculas os valores da derivada em um tempo $t$.
 Há muitas maneiras de fazer isso, mas o formato recomendado é:
+
 * Faça uma função com três argumentos: seqüência de tempo, variáveis ​​de estado e parâmetros, nesta ordem.
 * A função deve retornar uma lista com resultados da função a ser integrada.
+
 Para fazer isso use `with(as.list(c(state, parameters){ ... }` dentro da função R.
 Inclua entre parênteses a(s) função(ões) a ser(em) integrada(s)
 e então feche retornando a lista dos valores calculados.
