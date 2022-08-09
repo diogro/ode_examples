@@ -6,6 +6,7 @@ output: html_document
 Esta é uma breve descrição do que é integração numérica e um tutorial prático de como fazê-la em R.*
 
 ## Software necessário
+
 *Para executar os códigos R deste documento markdown em seu próprio computador, você precisa instalar o seguinte software:*
 
 * [R](http://www.r-project.org/), juntamente com os pacotes do [CRAN](http://cran.r-project.org/):
@@ -170,10 +171,6 @@ head(out) # primeiras 6 linhas
 Que podemos plotar
 
 ```{r}
-#### Para o jupyter notebook apenas
-options(jupyter.plot_mimetypes = 'image/png', repr.plot.height=5)
-####
-
 plot(out, lwd=6, col="lightblue", main="", ylab="N(t)")
 curve(0.1*10*exp(1.5*x)/(10+0.1*(exp(1.5*x)-1)), add=TRUE)
 legend("topleft", c("Numerical", "Analytical"), lty=1, col=c("lightblue", "black"), lwd=c(6,1))
@@ -190,6 +187,7 @@ print(p+analytic)
 ```
 
 ### Um sistema de equações
+
 Agora, e se quiséssemos integrar um sistema de equações diferenciais? Vamos tomar, por exemplo, as equações para o sistema predador-presa de Lotka-Volterra:
 
 $$ \begin{aligned}
