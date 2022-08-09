@@ -6,7 +6,6 @@ output: html_document
 Esta é uma breve descrição do que é integração numérica e um tutorial prático de como fazê-la em R.*
 
 ## Software necessário
-### R
 *Para executar os códigos R deste documento markdown em seu próprio computador, você precisa instalar o seguinte software:*
 
 * [R](http://www.r-project.org/), juntamente com os pacotes do [CRAN](http://cran.r-project.org/):
@@ -24,12 +23,14 @@ Para instalar os pacotes, tudo o que você precisa fazer é executar o seguinte 
 
     install.packages(c("deSolve", "ggplot2", "reshape2"))
  
-O código R apresentado aqui e alguns exemplos adicionais estão disponíveis em https://github.com/diogro/ode_examples (obrigado, [Diogro](https://github.com/diogro)!).
+O código R apresentado aqui e alguns exemplos adicionais estão disponíveis em https://github.com/piklprado/ode_examples (obrigado, [Diogro](https://github.com/diogro), e todos mais que desenvolveram estes tutoriais).
 
 ### Executando comandos este notebook
+
 Você pode executar os comandos neste notebook diretamente no R de duas maneiras:
-* Abra este documento markdown no R Studio. Os blocos de código podem ser executados no R.
-* Baixe o script com os comandos usados neste documento aqui.
+
+* Abra [este documento Rmarkdown](https://raw.githubusercontent.com/piklprado/ode_examples/master/Integracao%20numerica%20em%20R.Rmd) no R Studio. Os blocos de código podem ser executados no R.
+* Baixe o [script](https://raw.githubusercontent.com/piklprado/ode_examples/master/Integracao%20numerica%20em%20R.R) com os comandos usados neste documento aqui.
 * Copie os trechos de códigos R e cole-os no prompt R. 
 
 ## Como funciona a integração numérica
@@ -53,7 +54,7 @@ com um valor inicial $x_0 = 0.1$ em um momento inicial $t=0$ (ou seja, $x(0) = 0
 
 Claro, isso é terrivelmente tedioso de fazer à mão, então podemos escrever um programa simples para fazer isso e fazer um gráfico  da solução. Abaixo, comparamos com a solução que obtivemos na tabela acima com intervalos de tempo $0.1$ com a solução analítica conhecida desta equação diferencial (a *equação logística*). **Não se preocupe com o código ainda**: existem maneiras melhores e mais simples de fazer isso! Os pontos são os valores aproximados para alguns momentos, e a linha mostra a solução analítica.
 
-```{r}
+```{r Exemplo_Euler}
 # intervalos de tempo: uma sequência de zero a dez em passos de 0,5
 time <- seq(0, 10, by = 0.5)
 # condição inicial
