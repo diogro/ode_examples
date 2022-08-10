@@ -26,7 +26,7 @@ Para instalar os pacotes, tudo o que você precisa fazer é executar o seguinte 
  
 O código R apresentado aqui e alguns exemplos adicionais estão disponíveis em https://github.com/piklprado/ode_examples (obrigado, [Diogro](https://github.com/diogro), e todos mais que desenvolveram estes tutoriais).
 
-### Executando comandos este notebook
+### Executando comandos deste tutorial
 
 Você pode executar os comandos neste notebook diretamente no R de duas maneiras:
 
